@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #0E0E0E;
+  --color-surface1: #141414;
+  --color-surface2: #1C1C1C;
+  --color-concrete: #D4CFC8;
+  --color-steel: #8A8A8A;
+  --color-accent: #E85D04;
+  --color-accent-hover: #F48C06;
+  --color-warm: #F2EFE9;
+  --color-secondary: #6B6B6B;
+  --color-grid: rgba(255, 255, 255, 0.06);
+  --nav-height: 68px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  width: 100%;
+  background: #0E0E0E;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+}
+
+/* Hide default cursor — custom cursor handles desktop */
+@media (min-width: 769px) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Each section fills at minimum the viewport */
+.section-base {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  /* scroll-margin accounts for the fixed navbar */
+  scroll-margin-top: var(--nav-height);
+}
+
+input, select {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font: inherit;
+  width: 100%;
+}
+
+input::placeholder {
+  color: rgba(14, 14, 14, 0.4);
+}
+
+select option {
+  background: #0E0E0E;
+  color: #F2EFE9;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0E0E0E; }
+::-webkit-scrollbar-thumb { background: rgba(232, 93, 4, 0.35); border-radius: 2px; }
+* { scrollbar-width: thin; scrollbar-color: rgba(232,93,4,.3) #0E0E0E; }
+
+::selection {
+  background: rgba(232, 93, 4, 0.3);
+  color: #F2EFE9;
+}
