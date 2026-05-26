@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import AnimatedCounter from '../components/AnimatedCounter'
+import useIsMobile from '../hooks/useIsMobile'
 
 const SPECS = [
   { num: 12,   label: 'PAVIMENTOS' },
@@ -75,8 +76,9 @@ function BuildingSVG({ inView }) {
 }
 
 export default function SectionStructure() {
-  const ref     = useRef(null)
-  const inView  = useInView(ref, { once: true, amount: 0.25 })
+  const ref      = useRef(null)
+  const inView   = useInView(ref, { once: true, amount: 0.25 })
+  const isMobile = useIsMobile()
 
   // Real parallax driven by scroll position relative to this section
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
@@ -89,23 +91,25 @@ export default function SectionStructure() {
       style={{
         background: '#0E0E0E',
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
         alignItems: 'stretch',
         paddingTop: 'var(--nav-height)',
       }}
     >
       {/* Left — building + parallax */}
       <div style={{
-        flex: '0 0 55%',
+        flex: isMobile ? 'none' : '0 0 55%',
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        padding: '40px 40px 60px',
-        borderRight: '1px solid rgba(255,255,255,0.04)',
+        padding: isMobile ? '32px 6vw 0' : '40px 40px 60px',
+        borderRight: isMobile ? 'none' : '1px solid rgba(255,255,255,0.04)',
+        borderBottom: isMobile ? '1px solid rgba(255,255,255,0.04)' : 'none',
       }}>
         <motion.div
-          style={{ y: imageY, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          style={{ y: isMobile ? 0 : imageY, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
           <BuildingSVG inView={inView} />
         </motion.div>
@@ -117,13 +121,13 @@ export default function SectionStructure() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '60px 6vw 60px 48px',
+        padding: isMobile ? '32px 6vw 48px' : '60px 6vw 60px 48px',
       }}>
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : 20 }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          style={{ fontFamily: '"Courier New", monospace', fontSize: '0.62rem', color: '#E85D04', letterSpacing: '0.25em', marginBottom: 20 }}
+          style={{ fontFamily: '"Courier New", monospace', fontSize: isMobile ? '0.72rem' : '0.62rem', color: '#E85D04', letterSpacing: '0.25em', marginBottom: 20 }}
         >
           02 / ESTRUTURA
         </motion.div>

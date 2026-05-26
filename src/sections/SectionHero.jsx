@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import TextStamp from '../components/TextStamp'
+import useIsMobile from '../hooks/useIsMobile'
 
 const T = { P2: 800, P3: 1600, P4: 2400 }
 
 export default function SectionHero({ onNavigate }) {
-  const [phase, setPhase]       = useState(0)
+  const [phase, setPhase]         = useState(0)
   const [titleDone, setTitleDone] = useState(false)
+  const isMobile                  = useIsMobile()
 
   // Hero always plays on mount — it's the first thing the user sees
   useEffect(() => {
@@ -96,7 +98,7 @@ export default function SectionHero({ onNavigate }) {
             }}
           />
 
-          <motion.div
+          {!isMobile && <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.12 }}
@@ -129,7 +131,7 @@ export default function SectionHero({ onNavigate }) {
             }}>
               RENDER / ATLAS
             </div>
-          </motion.div>
+          </motion.div>}
 
           <motion.div
             initial={{ opacity: 0, y: 6 }}
@@ -141,9 +143,9 @@ export default function SectionHero({ onNavigate }) {
               left: '6vw',
               fontFamily: 'Inter, sans-serif',
               fontWeight: 300,
-              fontSize: '0.6rem',
+              fontSize: isMobile ? '0.72rem' : '0.6rem',
               color: '#E85D04',
-              letterSpacing: '0.32em',
+              letterSpacing: isMobile ? '0.18em' : '0.32em',
               zIndex: 2,
             }}
           >
@@ -153,7 +155,7 @@ export default function SectionHero({ onNavigate }) {
       )}
 
       {/* Phase 4 — title + CTAs */}
-      <div style={{ position: 'relative', zIndex: 3, maxWidth: '72vw' }}>
+      <div style={{ position: 'relative', zIndex: 3, maxWidth: isMobile ? '92vw' : '72vw' }}>
         {phase >= 3 && (
           <>
             <div style={{ marginBottom: 6 }}>
@@ -197,17 +199,17 @@ export default function SectionHero({ onNavigate }) {
                   <p style={{
                     fontFamily: '"DM Sans", sans-serif',
                     fontWeight: 400,
-                    fontSize: 'clamp(0.88rem, 1.3vw, 1.1rem)',
+                    fontSize: isMobile ? '1rem' : 'clamp(0.88rem, 1.3vw, 1.1rem)',
                     color: '#8A8A8A',
                     letterSpacing: '0.03em',
-                    marginBottom: 40,
-                    maxWidth: 460,
+                    marginBottom: isMobile ? 28 : 40,
+                    maxWidth: isMobile ? '100%' : 460,
                     lineHeight: 1.7,
                   }}>
                     Viver no centro. Construído para durar décadas.
                   </p>
 
-                  <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 10 : 14 }}>
                     <button
                       data-hover="true"
                       onClick={() => onNavigate(1)}

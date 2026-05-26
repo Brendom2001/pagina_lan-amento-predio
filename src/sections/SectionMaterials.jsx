@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import useIsMobile from '../hooks/useIsMobile'
 
 const CARDS = [
   {
@@ -69,8 +70,9 @@ const CARDS = [
 ]
 
 export default function SectionMaterials() {
-  const ref    = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.15 })
+  const ref      = useRef(null)
+  const inView   = useInView(ref, { once: true, amount: 0.15 })
+  const isMobile = useIsMobile()
   const [hovered, setHovered] = useState(null)
 
   return (
@@ -111,7 +113,7 @@ export default function SectionMaterials() {
       {/* Cards grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
+        gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
         gap: 2,
       }}>
         {CARDS.map((card, i) => {
@@ -130,13 +132,13 @@ export default function SectionMaterials() {
                 background: isHov ? '#1A1A1A' : '#141414',
                 borderTop: isHov ? '2px solid #E85D04' : '2px solid transparent',
                 border: isHov ? undefined : '1px solid #1C1C1C',
-                padding: '32px 28px',
+                padding: isMobile ? '20px 16px' : '32px 28px',
                 transition: 'background 0.25s, border-color 0.25s',
                 overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 16,
-                minHeight: 220,
+                gap: 12,
+                minHeight: isMobile ? 180 : 220,
               }}>
               {/* Ordinal bg */}
               <div style={{
@@ -161,18 +163,18 @@ export default function SectionMaterials() {
               <div style={{
                 fontFamily: '"Space Grotesk", sans-serif',
                 fontWeight: 700,
-                fontSize: '0.82rem',
+                fontSize: isMobile ? '0.78rem' : '0.82rem',
                 color: '#F2EFE9',
-                letterSpacing: '0.12em',
+                letterSpacing: '0.1em',
               }}>
                 {card.title}
               </div>
 
               <p style={{
                 fontFamily: '"DM Sans", sans-serif',
-                fontSize: '0.78rem',
+                fontSize: isMobile ? '0.76rem' : '0.78rem',
                 color: '#6B6B6B',
-                lineHeight: 1.7,
+                lineHeight: 1.65,
                 margin: 0,
               }}>
                 {card.desc}

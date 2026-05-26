@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import useIsMobile from '../hooks/useIsMobile'
 
 const DISTANCES = [
   { dist: '200m',   label: 'Supermercado central' },
@@ -87,8 +88,9 @@ function MapPlaceholder({ inView }) {
 }
 
 export default function SectionLocation() {
-  const ref    = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.2 })
+  const ref      = useRef(null)
+  const inView   = useInView(ref, { once: true, amount: 0.2 })
+  const isMobile = useIsMobile()
 
   return (
     <div
@@ -97,17 +99,18 @@ export default function SectionLocation() {
       style={{
         background: '#0A0A0A',
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
         paddingTop: 'var(--nav-height)',
         borderTop: '1px solid rgba(255,255,255,0.04)',
       }}
     >
       {/* Left — info */}
       <div style={{
-        flex: '0 0 44%',
+        flex: isMobile ? 'none' : '0 0 44%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '60px 4vw 60px 6vw',
+        padding: isMobile ? '40px 6vw 32px' : '60px 4vw 60px 6vw',
       }}>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: inView ? 1 : 0 }} transition={{ duration: 0.4 }}
@@ -190,7 +193,7 @@ export default function SectionLocation() {
       </div>
 
       {/* Right — map */}
-      <div style={{ flex: 1, padding: '40px 6vw 40px 0', display: 'flex', alignItems: 'stretch' }}>
+      <div style={{ flex: 1, padding: isMobile ? '0 6vw 48px' : '40px 6vw 40px 0', display: 'flex', alignItems: 'stretch' }}>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: inView ? 1 : 0 }} transition={{ delay: 0.3, duration: 0.6 }}
           style={{ width: '100%' }}>

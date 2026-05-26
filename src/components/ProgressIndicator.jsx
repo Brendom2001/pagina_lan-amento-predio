@@ -31,6 +31,7 @@ export default function ProgressIndicator({ current, total, sections, onNavigate
 
       {/* Right-side section dots */}
       <div
+        className="progress-dots"
         style={{
           position: 'fixed',
           right: 24,

@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import AnimatedCounter from '../components/AnimatedCounter'
+import useIsMobile from '../hooks/useIsMobile'
 
 const OBRAS = [
   { name: 'Residencial Canto Verde', year: '2021', pavs: '8 pav.' },
@@ -47,8 +48,9 @@ function ObraCard({ obra, inView, delay }) {
 }
 
 export default function SectionAbout() {
-  const ref    = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.2 })
+  const ref      = useRef(null)
+  const inView   = useInView(ref, { once: true, amount: 0.2 })
+  const isMobile = useIsMobile()
 
   return (
     <div
@@ -57,18 +59,20 @@ export default function SectionAbout() {
       style={{
         background: '#0E0E0E',
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
         paddingTop: 'var(--nav-height)',
         borderTop: '1px solid rgba(255,255,255,0.04)',
       }}
     >
       {/* Left */}
       <div style={{
-        flex: '0 0 52%',
+        flex: isMobile ? 'none' : '0 0 52%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '60px 4vw 60px 6vw',
-        borderRight: '1px solid #E85D04',
+        padding: isMobile ? '40px 6vw 32px' : '60px 4vw 60px 6vw',
+        borderRight: isMobile ? 'none' : '1px solid #E85D04',
+        borderBottom: isMobile ? '1px solid rgba(232,93,4,0.3)' : 'none',
       }}>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: inView ? 1 : 0 }} transition={{ duration: 0.4 }}
@@ -100,7 +104,7 @@ export default function SectionAbout() {
         </motion.p>
 
         {/* Obras */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 36 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 12, marginBottom: 36 }}>
           {OBRAS.map((obra, i) => (
             <ObraCard key={obra.name} obra={obra} inView={inView} delay={0.38 + i * 0.09} />
           ))}
@@ -125,7 +129,7 @@ export default function SectionAbout() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '60px 6vw 60px 5vw',
+        padding: isMobile ? '32px 6vw 48px' : '60px 6vw 60px 5vw',
       }}>
         {METRICS.map(({ num, suffix, label }, i) => (
           <motion.div

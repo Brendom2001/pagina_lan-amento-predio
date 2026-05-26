@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
+import useIsMobile from '../hooks/useIsMobile'
 
 const UNIT_OPTIONS = ['Studio 32m²', '1 Dormitório 48m²', '2 Dormitórios 72m²', 'Cobertura 120m²']
 
@@ -17,8 +18,9 @@ function CADSpinner() {
 }
 
 export default function SectionCTA() {
-  const ref     = useRef(null)
-  const inView  = useInView(ref, { once: true, amount: 0.25 })
+  const ref      = useRef(null)
+  const inView   = useInView(ref, { once: true, amount: 0.25 })
+  const isMobile = useIsMobile()
   const [form, setForm]     = useState({ nome: '', tel: '', tipo: '' })
   const [status, setStatus] = useState('idle')
 
@@ -121,7 +123,7 @@ export default function SectionCTA() {
           <AnimatePresence mode="wait">
             {status !== 'success' ? (
               <motion.form key="form" onSubmit={handleSubmit} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.25 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 20, marginBottom: 20 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: isMobile ? 16 : 20, marginBottom: 20 }}>
                   {[
                     { key: 'nome', placeholder: 'Nome completo', type: 'text' },
                     { key: 'tel',  placeholder: 'Telefone / WhatsApp', type: 'tel'  },
@@ -132,7 +134,7 @@ export default function SectionCTA() {
                         placeholder={placeholder}
                         value={form[key]}
                         onChange={e => setForm(p => ({ ...p, [key]: e.target.value }))}
-                        style={{ fontFamily: '"DM Sans", sans-serif', fontSize: '0.86rem', color: '#0E0E0E' }}
+                        style={{ fontFamily: '"DM Sans", sans-serif', fontSize: isMobile ? '1rem' : '0.86rem', color: '#0E0E0E' }}
                       />
                     </div>
                   ))}
@@ -140,7 +142,7 @@ export default function SectionCTA() {
                     <select
                       value={form.tipo}
                       onChange={e => setForm(p => ({ ...p, tipo: e.target.value }))}
-                      style={{ fontFamily: '"DM Sans", sans-serif', fontSize: '0.86rem', color: form.tipo ? '#0E0E0E' : 'rgba(14,14,14,0.4)', appearance: 'none' }}>
+                      style={{ fontFamily: '"DM Sans", sans-serif', fontSize: isMobile ? '1rem' : '0.86rem', color: form.tipo ? '#0E0E0E' : 'rgba(14,14,14,0.4)', appearance: 'none' }}>
                       <option value="" disabled>Tipo de unidade ▾</option>
                       {UNIT_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
                     </select>
@@ -206,7 +208,7 @@ export default function SectionCTA() {
         {/* Footer */}
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: inView ? 1 : 0 }} transition={{ delay: 0.65 }}
-          style={{ marginTop: 52, display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 20, borderTop: '1px solid rgba(14,14,14,0.18)' }}>
+          style={{ marginTop: 52, display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 8 : 0, justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center', paddingTop: 20, borderTop: '1px solid rgba(14,14,14,0.18)' }}>
           <div style={{ fontFamily: '"Space Grotesk", sans-serif', fontWeight: 700, fontSize: '0.88rem', color: '#0E0E0E', letterSpacing: '0.1em' }}>
             VÉRTICE CONSTRUTORA
           </div>

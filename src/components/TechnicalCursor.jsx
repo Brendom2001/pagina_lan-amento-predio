@@ -77,6 +77,7 @@ export default function TechnicalCursor() {
           willChange: 'transform',
           opacity: visible ? 1 : 0,
           transition: 'opacity 0.3s',
+          mixBlendMode: 'difference',
         }}
       >
         {/* Crosshair arms */}
@@ -86,7 +87,7 @@ export default function TechnicalCursor() {
             position: 'absolute',
             width: 20,
             height: 1,
-            background: '#E85D04',
+            background: '#FFFFFF',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -96,7 +97,7 @@ export default function TechnicalCursor() {
             position: 'absolute',
             width: 1,
             height: 20,
-            background: '#E85D04',
+            background: '#FFFFFF',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -107,7 +108,7 @@ export default function TechnicalCursor() {
             width: 3,
             height: 3,
             borderRadius: '50%',
-            background: '#E85D04',
+            background: '#FFFFFF',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -119,7 +120,7 @@ export default function TechnicalCursor() {
           {hovering && (
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 0.18 }}
+              animate={{ scale: 1, opacity: 0.4 }}
               exit={{ scale: 0, opacity: 0 }}
               transition={{ duration: 0.22 }}
               style={{
@@ -127,8 +128,8 @@ export default function TechnicalCursor() {
                 width: 42,
                 height: 42,
                 borderRadius: '50%',
-                border: '1.5px solid #E85D04',
-                background: 'rgba(232, 93, 4, 0.12)',
+                border: '1.5px solid #FFFFFF',
+                background: 'rgba(255, 255, 255, 0.08)',
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',

@@ -124,10 +124,10 @@ export default function FloatingNav({ current, total, sections, onNavigate }) {
           data-hover="true"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menu"
+          className="show-mobile"
           style={{
             background: 'none',
             border: 'none',
-            display: 'none',
             flexDirection: 'column',
             gap: 5,
             padding: 4,

@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
+import useIsMobile from '../hooks/useIsMobile'
 
 const TIPOLOGIAS = [
   {
@@ -123,8 +124,9 @@ function FloorplanSVG({ tip, drawing }) {
 }
 
 export default function SectionFloorplan() {
-  const ref     = useRef(null)
-  const inView  = useInView(ref, { once: true, amount: 0.2 })
+  const ref      = useRef(null)
+  const inView   = useInView(ref, { once: true, amount: 0.2 })
+  const isMobile = useIsMobile()
   const [activeTab, setActiveTab] = useState(0)
   const tip = TIPOLOGIAS[activeTab]
 
@@ -174,12 +176,12 @@ export default function SectionFloorplan() {
               style={{
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: activeTab === i ? 500 : 300,
-                fontSize: '0.66rem',
-                letterSpacing: '0.15em',
+                fontSize: isMobile ? '0.76rem' : '0.66rem',
+                letterSpacing: '0.1em',
                 color: activeTab === i ? '#F2EFE9' : '#6B6B6B',
                 background: 'none',
                 border: 'none',
-                padding: '10px 20px',
+                padding: isMobile ? '12px 14px' : '10px 20px',
                 position: 'relative',
                 transition: 'color 0.2s',
               }}>
@@ -200,9 +202,9 @@ export default function SectionFloorplan() {
       <div style={{
         flex: 1,
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
         gap: 0,
-        padding: '32px 6vw 60px',
+        padding: isMobile ? '24px 6vw 48px' : '32px 6vw 60px',
         alignItems: 'start',
       }}>
         {/* SVG Plan */}
@@ -218,7 +220,8 @@ export default function SectionFloorplan() {
               border: '1px solid rgba(255,255,255,0.05)',
               padding: '28px',
               position: 'relative',
-              marginRight: '4vw',
+              marginRight: isMobile ? 0 : '4vw',
+              marginBottom: isMobile ? 24 : 0,
             }}>
             <FloorplanSVG tip={tip} drawing={inView} />
             <div style={{
