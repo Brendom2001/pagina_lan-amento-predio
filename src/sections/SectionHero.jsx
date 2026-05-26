@@ -160,7 +160,7 @@ export default function SectionHero({ onNavigate }) {
           <>
             <div style={{ marginBottom: 6 }}>
               <TextStamp
-                text="ÉDIFICIO"
+                text="EDIFÍCIO"
                 delay={0}
                 style={{
                   fontFamily: '"Space Grotesk", sans-serif',

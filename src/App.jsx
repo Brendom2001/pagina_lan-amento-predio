@@ -41,11 +41,11 @@ export default function App() {
 
       const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+          if (entry.isIntersecting) {
             setCurrentSection(idx)
           }
         },
-        { threshold: 0.4 }
+        { threshold: 0.15, rootMargin: '-20% 0px -20% 0px' }
       )
       obs.observe(el)
       observers.push(obs)

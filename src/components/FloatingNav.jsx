@@ -49,7 +49,7 @@ export default function FloatingNav({ current, total, sections, onNavigate }) {
           letterSpacing: '0.24em',
           display: 'block',
         }}>
-          ÉDIFICIO ATLAS
+          EDIFÍCIO ATLAS
         </span>
       </button>
 
